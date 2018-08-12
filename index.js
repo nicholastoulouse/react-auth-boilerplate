@@ -1,8 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
+const bodyParser = require('body-parser');
 const passport = require('passport');
 const keys = require('./config/keys');
+
 // this should be above the passport require
 // you will get an error if you dont do this.
 // this is because if you flip this require call
@@ -16,7 +18,8 @@ mongoose.connect(keys.mongoURI);
 const PORT = process.env.PORT || 3001;
 
 const app = express();
-
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 app.use(
   cookieSession({
     // the maxAge setting tells the browser how long it will take before this cookie expires
@@ -34,6 +37,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/authRoutes')(app);
+require('./routes/billingRoutes')(app);
 
 app.get('/', (req, res) => {
   res.send({ hi: "there"});
