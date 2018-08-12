@@ -2,3 +2,5 @@ node_modules
 dev.js
 config
 package-lock.json
+.env.development
+.env.production
