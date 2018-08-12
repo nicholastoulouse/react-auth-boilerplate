@@ -26,7 +26,7 @@ module.exports = app => {
     '/auth/google/callback',
     passport.authenticate('google'),
     (req, res) => {
-      res.redirect('/')
+      res.redirect('/surveys')
     }
   );
 
@@ -36,7 +36,7 @@ module.exports = app => {
     // and destroys it
     req.logout();
     // sends back undefined
-    res.redirect('/');w
+    res.redirect('/');
   });
 
   app.get('/api/current_user', (req, res) => {
