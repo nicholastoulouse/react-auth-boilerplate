@@ -10,6 +10,8 @@ const keys = require('./config/keys');
 // this is because if you flip this require call
 // we will be attempting to use the User model before we define it
 require('./models/User');
+require('./models/Survey');
+
 require('./services/passport');
 
 

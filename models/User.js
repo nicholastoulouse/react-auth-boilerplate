@@ -6,7 +6,8 @@ const UserSchema = new Schema({
   credits: {
     type: Number,
     default: 0
-  }
+  },
+  surveys: [{type: Schema.Types.ObjectId, ref: 'Users'}]
 });
 
 const User = mongoose.model('users', UserSchema);
