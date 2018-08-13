@@ -1,6 +1,7 @@
 node_modules
 dev.js
-config
+config/dev.js
+config/prod.js
 package-lock.json
 .env.development
 .env.production
