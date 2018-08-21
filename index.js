@@ -11,9 +11,7 @@ const keys = require('./config/keys');
 // we will be attempting to use the User model before we define it
 require('./models/User');
 require('./models/Survey');
-
 require('./services/passport');
-
 
 mongoose.connect(keys.mongoURI);
 
@@ -40,6 +38,7 @@ app.use(passport.session());
 
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/surveyRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
