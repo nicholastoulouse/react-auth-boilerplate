@@ -25,7 +25,7 @@ class Mailer extends helper.Mail {
   }
 
   formatAddresses(recipients) {
-    return recipients(({ email }) => {
+    return recipients.map(({ email }) => {
       return new helper.Email(email);
     });
   }
@@ -52,7 +52,7 @@ class Mailer extends helper.Mail {
 
   async send(){
     // Define the request and turn it into JSON
-    const request = this.sgApi().emptyRequest({
+    const request = this.sgApi.emptyRequest({
       method: 'POST',
       path: '/v3/mail/send',
       body: this.toJSON()
