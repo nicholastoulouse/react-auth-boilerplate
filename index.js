@@ -6,7 +6,7 @@ const passport = require('passport');
 const keys = require('./config/keys');
 
 // this should be above the passport require
-// you will get an error if you dont do this.
+// you will get an error if you don't do this.
 // this is because if you flip this require call
 // we will be attempting to use the User model before we define it
 require('./models/User');
