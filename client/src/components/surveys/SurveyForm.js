@@ -4,17 +4,12 @@ import { reduxForm, Field } from 'redux-form';
 import SurveyField from './SurveyField';
 import validateEmails from './../../utils/validateEmails';
 
-const FIELDS = [
-  { label: 'Survey Title',    name: 'title'   },
-  { label: 'Subject Line',    name: 'subject' },
-  { label: 'Email Body',      name: 'body'    },
-  { label: 'Recipient List',  name: 'emails', },
-];
+import formFields from './formFields';
 
 class SurveyForm extends Component {
 
   renderFields(){
-    return FIELDS.map(({ name, label })=> {
+    return formFields.map(({ name, label })=> {
       return <Field key={name} component={SurveyField} label={label} name={name} />;
     });
   }
@@ -27,7 +22,7 @@ class SurveyForm extends Component {
           values in this case are coming from the name property passed into
           the Field component
         */}
-        <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
+        <form onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}>
           {this.renderFields()}
           <Link to='/surveys' className='red white-text btn-flat'>Cancel</Link>
           <button type='submit' className='teal white-text right btn-flat'>
@@ -48,7 +43,7 @@ class SurveyForm extends Component {
 function validate(values) {
   const errors = {};
 
-  FIELDS.forEach( ({ name }) => {
+  formFields.forEach( ({ name }) => {
     if(!values[name]) {
       errors[name] = 'You must provide a value';
     }
@@ -57,7 +52,7 @@ function validate(values) {
   // Have to pass in an empty string otherwise this function will throw an error
   // When this component first renders, validate will fire right away and validate emails
   // Will not have any values in it. This will cause the helper function to break
-  errors.emails = validateEmails(values.emails || '');
+  errors.recipients = validateEmails(values.recipients || '');
   return errors;
 }
 
@@ -66,5 +61,10 @@ function validate(values) {
 // Each form must have a unique form value
 export default reduxForm({
   validate,
-  form: 'surveyForm'
+  // This tells redux-form to save our form values in form.surveyForm.values
+  // This allows us to have multiple form components and never have conflicting state
+  form: 'surveyForm',
+  // By default, redux-form will destroy the state when it unmounts.
+  // This tells redux form to keep the state even when it leaves.
+  destroyOnUnmount: false
 })(SurveyForm);
