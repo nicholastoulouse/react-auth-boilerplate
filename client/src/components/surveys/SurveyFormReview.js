@@ -12,7 +12,7 @@ const ShowFormReview = ({ onCancel, values , submitSurvey, history }) => {
      <div key={field.name}>
        <label>{ field.label }</label>
        <div>
-         { values[field.name ] }
+         { values[field.name] }
        </div>
      </div>
 

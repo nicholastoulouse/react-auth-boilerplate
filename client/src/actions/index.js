@@ -20,5 +20,7 @@ export const handleToken = token => async dispatch => {
 export const submitSurvey = (values,history) => async dispatch => {
   const res = await axios.post('/api/surveys', values);
   history.push('/surveys');
+  // We send a type of FETCH_USER to update the user state.
+  // Remember that the data returned from this POST request is the updated user
   dispatch({ type: FETCH_USER, payload: res.data });
 };
