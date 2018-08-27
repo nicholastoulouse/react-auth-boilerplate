@@ -11,7 +11,15 @@ const Survey = mongoose.model('Survey');
 
 module.exports = app => {
 
-  app.get('/api/surveys/thanks', (req, res) => {
+  app.get('/api/surveys', async (req, res) => {
+    // Get all of the surveys but don't return the recipients list in the response
+    const surveys = await Survey.find({ _user: req.user.id }).select({
+      recipients: false
+    });
+
+    res.send(surveys);
+  });
+  app.get('/api/surveys/:surveyId/:choice', (req, res) => {
     res.send('Thanks so much for voting!');
   });
 
@@ -61,7 +69,8 @@ module.exports = app => {
             },
             {
               $inc: {[choice]: 1},
-              $set: {'recipients.$.responded': true}
+              $set: {'recipients.$.responded': true},
+              lastResponded: new Date()
             }
           ).exec();
         } catch(e) {
